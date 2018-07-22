@@ -23,6 +23,7 @@ extern void _NmiInit(void);
 #define NMI_INIT()
 #endif
 
+#include <nrf.h>
 #include <system_nrf51.h>
 
 static int nordicsemi_nrf51_init(struct device *arg)
@@ -34,6 +35,25 @@ static int nordicsemi_nrf51_init(struct device *arg)
 	key = irq_lock();
 
 	SystemInit();
+
+	/* Configure the external crystal frequency.*/
+#if (CONFIG_SYS_CLOCK_XTALFREQ == 32000000)
+	if (NRF_UICR->XTALFREQ == 0xffffffff) {
+		NRF_NVMC->CONFIG = NVMC_CONFIG_WEN_Wen << NVMC_CONFIG_WEN_Pos;
+		while (NRF_NVMC->READY == NVMC_READY_READY_Busy) {
+			;
+		}
+		NRF_UICR->XTALFREQ = 0xffffff00;
+		while (NRF_NVMC->READY == NVMC_READY_READY_Busy) {
+			;
+		}
+		NRF_NVMC->CONFIG = NVMC_CONFIG_WEN_Ren << NVMC_CONFIG_WEN_Pos;
+		while (NRF_NVMC->READY == NVMC_READY_READY_Busy) {
+			;
+		}
+		NVIC_SystemReset();
+	}
+#endif
 
 	/* Install default handler that simply resets the CPU
 	 * if configured in the kernel, NOP otherwise

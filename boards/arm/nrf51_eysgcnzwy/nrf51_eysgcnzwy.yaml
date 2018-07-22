@@ -1,0 +1,13 @@
+identifier: nrf51_eysgcnzwy
+name: EYSGCNZWY
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gccarmemb
+ram: 32
+supported:
+  - ble
+testing:
+  ignore_tags:
+    - net

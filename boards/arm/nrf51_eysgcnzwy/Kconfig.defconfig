@@ -1,0 +1,35 @@
+# Kconfig - nRF51 EYSGCNZWY module configuration
+#
+# Copyright (c) 2018 Owen Kirby <oskirby@gmail.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_NRF51_EYSGCNZWY
+
+config BOARD
+	default "nrf51_eysgcnzwy"
+
+if GPIO_NRF5
+
+config GPIO_NRF5_P0
+	default y
+
+endif # GPIO_NRF5
+
+if UART_NRFX
+
+config UART_0_NRF_TX_PIN
+	default 1
+
+config UART_0_NRF_RX_PIN
+	default 3
+
+config UART_0_NRF_RTS_PIN
+	default 0
+
+config UART_0_NRF_CTS_PIN
+	default 2
+
+endif # UART_NRFX
+
+endif # BOARD_NRF51_EYSGCNZWY

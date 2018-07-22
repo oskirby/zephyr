@@ -1,0 +1,9 @@
+# Kconfig - Taiyo Yuden EYSGCNZWY board configuration
+#
+# Copyright (c) 2018 Owen Kirby <oskirby@gmail.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_NRF51_EYSGCNZWY
+	bool "nRF51 EYSGCNZWY"
+	depends on SOC_NRF51822_QFAC
